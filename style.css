@@ -1,0 +1,40 @@
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  width: 320px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+.search {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+button {
+  padding: 10px 15px;
+  border: none;
+  background: #667eea;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#temp {
+  font-size: 40px;
+  margin: 10px 0;
+}
