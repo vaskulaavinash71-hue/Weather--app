@@ -1,6 +1,6 @@
 # 🌤️ Weather App - Real Time Weather
 
-🔗 **Live Demo:** [Click Here to View App](https://weather-app-xxx.vercel.app)
+🔗 **Live Demo:** https://weather-app-lovat-rho-63.vercel.app
 👨‍💻 **Portfolio:** https://vaskulaavinash71-hue.github.io/portfolio/
 
 Search any city in the world and get live temperature & wind speed instantly.
