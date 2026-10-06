@@ -1,37 +1,41 @@
 async function getWeather() {
-  const city = document.getElementById("city").value;
+  const cityInput = document.getElementById("city");
+  const city = cityInput.value.trim();
+  
   if (!city) {
-    alert("Enter city name");
+    alert("Please enter a city name");
     return;
   }
 
   try {
-    const geoRes = await fetch(
-      `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`,
-    );
+    // Step 1: Get lat/lon from city name
+    const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`);
     const geoData = await geoRes.json();
-    if (!geoData.results) {
-      alert("City not found");
+
+    if (!geoData.results || geoData.results.length === 0) {
+      alert("City not found! Try another city");
       return;
     }
 
     const lat = geoData.results[0].latitude;
     const lon = geoData.results[0].longitude;
-    const name = geoData.results[0].name;
+    const cityName = geoData.results[0].name + ", " + geoData.results[0].country;
 
-    const weatherRes = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`,
-    );
+    // Step 2: Get weather
+    const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
     const weatherData = await weatherRes.json();
 
-    document.getElementById("cityName").innerText = name;
-    document.getElementById("temp").innerText =
-      Math.round(weatherData.current_weather.temperature) + "°C";
-    document.getElementById("desc").innerText =
-      "Wind: " + weatherData.current_weather.windspeed + " km/h";
-    document.getElementById("humidity").innerText =
-      "Time: " + weatherData.current_weather.time;
-  } catch (err) {
-    alert("Error! " + err.message);
+    const temp = Math.round(weatherData.current_weather.temperature);
+    const wind = weatherData.current_weather.windspeed;
+
+    // Step 3: Show on UI
+    document.getElementById("cityName").innerText = cityName;
+    document.getElementById("temp").innerText = temp + "°C";
+    document.getElementById("desc").innerText = "Wind: " + wind + " km/h";
+    document.getElementById("humidity").innerText = "Live Data • Open-Meteo";
+
+  } catch (error) {
+    alert("Error: " + error.message);
+    console.log(error);
   }
 }
